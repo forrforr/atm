@@ -1,8 +1,49 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: rob
- * Date: 1/07/2014
- * Time: 3:09 PM
- * To change this template use File | Settings | File Templates.
- */
+class Atm {
+
+    private $fifties;
+    private $twenties;
+    private $total;
+
+    private function __construct($fifties,$twenies){
+        $this->fifties = $fifties;
+        $this->twenties = $twenies;
+
+        $this->total = (50*$fifties) + (20*$twenies);
+    }
+
+    public static function getInstance($fifties,$twenies){
+
+        return new self($fifties,$twenies);
+    }
+
+    public function withdraw($amount){
+        if ($this->validateInput($amount)){
+
+            $this->validateBankNotes($amount);
+        }
+    }
+
+    /**
+     * Check numeric and max and min values for ATM withdraw
+     * @param $amount
+     * @return bool
+     */
+    private function validateInput($amount){
+        return (is_numeric($amount) &&
+                ($amount>0) &&
+                ($amount<$this->total));
+
+    }
+
+    private function validateBankNotes($amount){
+        if ($amount%50 == 0)
+            return true;
+
+        if ($amount%20 == 0)
+            return true;
+
+
+
+    }
+}
