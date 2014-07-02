@@ -20,6 +20,33 @@ class AtmTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @expectedException Exception
+     * @dataProvider providerIncorectInput
+     */
+    public function testInputAtmInstantiateException($fifties,$twenties){
+
+        \Atm\Atm::getInstance($fifties,$twenties);
+
+    }
+
+    /**
+     * @param $fifties
+     * @param $twenties
+     * @param $amount
+     * @dataProvider providerIncorectWithdrawInput
+     * @expectedException Exception
+     */
+    public function testWitdrawing($fifties,$twenties,$amount){
+
+        //var_dump(func_get_args());
+        $oAtm = \Atm\Atm::getInstance($fifties,$twenties);
+        $oAtm->withdraw($amount);
+
+
+    }
+
+
     public function providerIncorectInput(){
         return array(
             array(3,'text'),
@@ -29,15 +56,11 @@ class AtmTest extends \PHPUnit_Framework_TestCase
         );
 
     }
-
-
-    /**
-     * @expectedException Exception
-     * @dataProvider providerIncorectInput
-     */
-    public function testInputAtmInstantiateException($fifties,$twenties){
-
-        \Atm\Atm::getInstance($fifties,$twenties);
+    public function providerIncorectWithdrawInput(){
+        return array(
+            array(3,2,4000),
+            array(1,1,-25)
+        );
 
     }
 

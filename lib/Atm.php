@@ -29,10 +29,13 @@ class Atm {
     }
 
     public function withdraw($amount){
-        if ($this->validateInput($amount)){
+        if (! $this->validateWithdrawInput($amount))
+            throw new \Exception('Incorect amount');
 
-            $this->validateBankNotes($amount);
-        }
+
+        //Validate final withdraw
+        $this->validateBankNotes($amount);
+
     }
 
     /**
@@ -43,7 +46,7 @@ class Atm {
     private function validateWithdrawInput($amount){
         return (is_numeric($amount) &&
                 ($amount>0) &&
-                ($amount<$this->total));
+                ($amount < $this->total));
 
     }
 
@@ -55,4 +58,7 @@ class Atm {
             return true;
 
     }
+
+
+    
 }
