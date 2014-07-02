@@ -7,7 +7,16 @@ class Atm {
     private $twenties;
     private $total;
 
+    /**
+     * @param $fifties
+     * @param $twenies
+     */
     private function __construct($fifties,$twenies){
+
+        if ((!is_numeric($fifties) || !is_int($fifties)) ||
+            (!is_numeric($twenies) || !is_int($twenies)))
+            throw new \Exception('Invalid inputs ');
+
         $this->fifties = $fifties;
         $this->twenties = $twenies;
 
@@ -31,7 +40,7 @@ class Atm {
      * @param $amount
      * @return bool
      */
-    private function validateInput($amount){
+    private function validateWithdrawInput($amount){
         return (is_numeric($amount) &&
                 ($amount>0) &&
                 ($amount<$this->total));
@@ -44,8 +53,6 @@ class Atm {
 
         if ($amount%20 == 0)
             return true;
-
-
 
     }
 }
