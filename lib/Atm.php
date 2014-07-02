@@ -1,4 +1,6 @@
 <?php
+namespace Atm;
+
 class Atm {
 
     private $fifties;
