@@ -16,12 +16,10 @@ class AtmTest extends \PHPUnit_Framework_TestCase
         $oInstance = \Atm\Atm::getInstance(3,4);
 
         $this->assertTrue(($oInstance instanceof \Atm\Atm));
-
-
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @dataProvider providerIncorectInput
      */
     public function testInputAtmInstantiateException($fifties,$twenties){
@@ -34,18 +32,55 @@ class AtmTest extends \PHPUnit_Framework_TestCase
      * @param $fifties
      * @param $twenties
      * @param $amount
+     * @expectedException \Exception
      * @dataProvider providerIncorectWithdrawInput
-     * @expectedException Exception
      */
     public function testWitdrawing($fifties,$twenties,$amount){
 
-        //var_dump(func_get_args());
         $oAtm = \Atm\Atm::getInstance($fifties,$twenties);
         $oAtm->withdraw($amount);
 
+    }
+
+    /**
+     * @param $amount
+     * @dataProvider providerAmountWithdrawIncorrect
+     *
+     */
+    public function testValidateBankNoteAmount($amount){
+        $oAtm = \Atm\Atm::getInstance(3,5);
+        $this->assertFalse($oAtm->withdraw($amount));
 
     }
 
+    /**
+     * @param $amount
+     * @dataProvider providerAmountWithdrawCorrect
+     */
+    public function testCorrectWidraw($amount){
+        $oAtm = \Atm\Atm::getInstance(3,5);
+        $this->assertTrue($oAtm->withdraw($amount));
+    }
+
+    public function providerAmountWithdrawCorrect(){
+        return array(
+            array(40),
+            array(70),
+            array(60),
+            array(80),
+            array(170),
+            array(120),
+            array(160),
+        );
+    }
+
+    public function providerAmountWithdrawIncorrect(){
+        return array(
+            array(155),
+            array(55),
+            array(25),
+        );
+    }
 
     public function providerIncorectInput(){
         return array(
