@@ -45,11 +45,11 @@ class AtmTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $amount
      * @dataProvider providerAmountWithdrawIncorrect
-     *
+     * @expectedException \Exception
      */
     public function testValidateBankNoteAmount($amount){
         $oAtm = \Atm\Atm::getInstance(3,5);
-        $this->assertFalse($oAtm->withdraw($amount));
+        $oAtm->withdraw($amount);
 
     }
 

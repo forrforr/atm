@@ -42,6 +42,10 @@ class Atm {
 
     }
 
+    public function __toString(){
+        return sprintf('Fifties n: %s and Twenties n:%s and total in ATM %s', $this->fifties,$this->twenties, $this->total);
+    }
+
     /**
      * Check numeric and max and min values for ATM withdraw
      * @param $amount
@@ -102,7 +106,7 @@ class Atm {
                     return true;
                 } elseif ($nFifties == 0) {
 
-                    return false;
+                    throw new \Exception('ATM dispense only 50 / 20 notes');
                 } else {
 
                     $nFifties--;
@@ -110,7 +114,7 @@ class Atm {
                 }
 
             } else {
-                return false;
+                throw new \Exception ('Lack of 20ties notes in ATM');
             }
 
     }
